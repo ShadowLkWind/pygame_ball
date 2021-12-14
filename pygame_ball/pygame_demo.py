@@ -8,6 +8,10 @@ h = 600  # 高
 screen = pygame.display.set_mode((w, h), pygame.RESIZABLE)  # 保存窗口对象 RESIZABLE 可修改窗口大小
 image_maple = pygame.image.load("./image/maple.ico")  # 加载图片
 image_maple_rect = image_maple.get_rect()  # 获取矩形框
+image_xian = pygame.image.load("./image/666.png")
+image_xian_rect = image_xian.get_rect()
+image_xian_rect.x = 250
+image_xian_rect.y = 500
 background1 = pygame.image.load("./image/1.png")  # 获取背景图1
 background2 = pygame.image.load("./image/2.png")  # 获取背景图2
 pygame.mixer.music.load("./music/1.mp3")  # 获取背景音乐
@@ -54,6 +58,8 @@ while key:
                     x += 1
         # 获取边框
         if event.type == pygame.VIDEORESIZE:
+            # w = event.size[0]
+            # h = event.size[1]
             w, h = event.size
         # 鼠标按下
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -65,21 +71,28 @@ while key:
             # 判断左键
             if event.button == 1:
                 move_key = True
-        # 鼠标长按
+        # 鼠标移动
         if event.type == pygame.MOUSEMOTION:
             # 判断左键
+            image_xian_rect.left = event.pos[0]
             if event.buttons[0] == 1:
                 image_maple_rect = image_maple_rect.move(event.pos[0] - image_maple_rect.left - 64,
                                                          event.pos[1] - image_maple_rect.top - 64)
+
     # 游戏内部逻辑处理
     # 绘制背景
     screen.blit(background1, (0, 0))
     screen.blit(background2, (750, 0))
+    screen.blit(background1, (1500, 0))
+    screen.blit(background2, (2250, 0))
+
     # 点击停止移动，松开继续
     if move_key:
         image_maple_rect = image_maple_rect.move(x, y)
     # 绘制图片
     screen.blit(image_maple, image_maple_rect)
+    screen.blit(image_xian, image_xian_rect)
+
     # 撞墙回弹
     if image_maple_rect.top <= 0:
         if y <= 0:
@@ -93,7 +106,8 @@ while key:
     if image_maple_rect.right >= w:
         if x > 0:
             x = -x
-
+    if pygame.Rect.colliderect(image_maple_rect, image_xian_rect):
+        y = -y
     # 更新画面
     pygame.display.update()
     # 速度设置
