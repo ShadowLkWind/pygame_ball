@@ -12,7 +12,7 @@ image_maple_rect = image_maple.get_rect()  # 获取矩形框
 image_xian = pygame.image.load("./image/666.png")  # 加载图片
 image_xian_rect = image_xian.get_rect()  # 获取矩形框
 image_xian_rect.x = 250  # 移动矩形框
-image_xian_rect.y = h - 200
+
 background1 = pygame.image.load("./image/1.png")  # 获取背景图1
 background2 = pygame.image.load("./image/2.png")  # 获取背景图2
 pygame.mixer.music.load("./music/1.mp3")  # 获取背景音乐
@@ -85,6 +85,7 @@ while key:
                                                          event.pos[1] - image_maple_rect.top - 64)
     text_num = text.render("当前分数为：%s" % num, True, (0, 0, 0))  # 分数对象
     # 游戏内部逻辑处理
+    image_xian_rect.y = h - 200
     # 绘制背景
     screen.blit(background1, (0, 0))
     screen.blit(background2, (750, 0))
