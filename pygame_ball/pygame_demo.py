@@ -11,7 +11,7 @@ image_maple_rect = image_maple.get_rect()  # 获取矩形框
 image_xian = pygame.image.load("./image/666.png")
 image_xian_rect = image_xian.get_rect()
 image_xian_rect.x = 250
-image_xian_rect.y = 500
+image_xian_rect.y = 300
 background1 = pygame.image.load("./image/1.png")  # 获取背景图1
 background2 = pygame.image.load("./image/2.png")  # 获取背景图2
 pygame.mixer.music.load("./music/1.mp3")  # 获取背景音乐
@@ -22,6 +22,7 @@ y = 1  # y轴的速度
 
 key = True  # 循环控制条件
 move_key = True  # 移动条件
+tan_key = True  # 移动条件
 
 while key:
     # 事件处理
@@ -97,17 +98,25 @@ while key:
     if image_maple_rect.top <= 0:
         if y <= 0:
             y = -y
+            tan_key = True
     if image_maple_rect.bottom >= h:
         if y > 0:
             y = -y
+            tan_key = True
     if image_maple_rect.left <= 0:
         if x <= 0:
             x = -x
+            tan_key = True
     if image_maple_rect.right >= w:
         if x > 0:
             x = -x
+            tan_key = True
     if pygame.Rect.colliderect(image_maple_rect, image_xian_rect):
-        y = -y
+        if tan_key:
+            y = -y
+            tan_key = False
+
+
     # 更新画面
     pygame.display.update()
     # 速度设置
