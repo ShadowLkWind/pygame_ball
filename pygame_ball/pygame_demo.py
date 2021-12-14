@@ -22,7 +22,6 @@ y = 1  # y轴的速度
 
 key = True  # 循环控制条件
 move_key = True  # 移动条件
-tan_key = True  # 移动条件
 
 while key:
     # 事件处理
@@ -98,25 +97,21 @@ while key:
     if image_maple_rect.top <= 0:
         if y <= 0:
             y = -y
-            tan_key = True
     if image_maple_rect.bottom >= h:
         if y > 0:
             y = -y
-            tan_key = True
     if image_maple_rect.left <= 0:
         if x <= 0:
             x = -x
-            tan_key = True
     if image_maple_rect.right >= w:
         if x > 0:
             x = -x
-            tan_key = True
+    print(image_xian_rect.bottom, image_xian_rect.top)
     if pygame.Rect.colliderect(image_maple_rect, image_xian_rect):
-        if tan_key:
+        if image_maple_rect.top + 1 == image_xian_rect.bottom and y < 0:
             y = -y
-            tan_key = False
-
-
+        if image_maple_rect.bottom - 1 == image_xian_rect.top and y > 0:
+            y = -y
     # 更新画面
     pygame.display.update()
     # 速度设置
